@@ -37,22 +37,22 @@
 
 const int chord_length = 4;
 
-const uint16_t CHORD_REST[] = {0, 0, 0, 0};
+const uint16_t CHORD_REST[] PROGMEM = {0, 0, 0, 0};
 
-const uint16_t CHORD_C[] = {NOTE_C5, NOTE_E4, NOTE_G4, NOTE_C6};
-const uint16_t CHORD_CS[] = {NOTE_CS5, NOTE_F4, NOTE_GS4, NOTE_CS6};
-const uint16_t CHORD_D[] = {NOTE_D5, NOTE_FS4, NOTE_A4, NOTE_D6};
-const uint16_t CHORD_DS[] = {NOTE_DS5, NOTE_F4, NOTE_AS4, NOTE_DS6};
-const uint16_t CHORD_E[] = {NOTE_E5, NOTE_GS4, NOTE_B4, NOTE_E6};
-const uint16_t CHORD_F[] = {NOTE_F5, NOTE_A4, NOTE_C4, NOTE_F6};
-const uint16_t CHORD_FS[] = {NOTE_FS5, NOTE_C4, NOTE_DS4, NOTE_FS6};
-const uint16_t CHORD_G[] = {NOTE_G5, NOTE_B4, NOTE_D4, NOTE_G6};
-const uint16_t CHORD_GS[] = {NOTE_GS5, NOTE_C4, NOTE_DS4, NOTE_GS6};
-const uint16_t CHORD_A[] = {NOTE_A5, NOTE_CS4, NOTE_E4, NOTE_A6};
-const uint16_t CHORD_AS[] = {NOTE_AS5, NOTE_D4, NOTE_F4, NOTE_AS6};
-const uint16_t CHORD_B[] = {NOTE_B5, NOTE_DS4, NOTE_FS4, NOTE_B6};
+const uint16_t CHORD_C[] PROGMEM = {NOTE_C5, NOTE_E4, NOTE_G4, NOTE_C6};
+const uint16_t CHORD_CS[] PROGMEM = {NOTE_CS5, NOTE_F4, NOTE_GS4, NOTE_CS6};
+const uint16_t CHORD_D[] PROGMEM = {NOTE_D5, NOTE_FS4, NOTE_A4, NOTE_D6};
+const uint16_t CHORD_DS[] PROGMEM = {NOTE_DS5, NOTE_F4, NOTE_AS4, NOTE_DS6};
+const uint16_t CHORD_E[] PROGMEM = {NOTE_E5, NOTE_GS4, NOTE_B4, NOTE_E6};
+const uint16_t CHORD_F[] PROGMEM = {NOTE_F5, NOTE_A4, NOTE_C4, NOTE_F6};
+const uint16_t CHORD_FS[] PROGMEM = {NOTE_FS5, NOTE_C4, NOTE_DS4, NOTE_FS6};
+const uint16_t CHORD_G[] PROGMEM = {NOTE_G5, NOTE_B4, NOTE_D4, NOTE_G6};
+const uint16_t CHORD_GS[] PROGMEM = {NOTE_GS5, NOTE_C4, NOTE_DS4, NOTE_GS6};
+const uint16_t CHORD_A[] PROGMEM = {NOTE_A5, NOTE_CS4, NOTE_E4, NOTE_A6};
+const uint16_t CHORD_AS[] PROGMEM = {NOTE_AS5, NOTE_D4, NOTE_F4, NOTE_AS6};
+const uint16_t CHORD_B[] PROGMEM = {NOTE_B5, NOTE_DS4, NOTE_FS4, NOTE_B6};
 
-const uint16_t CHORDS[13] = {&CHORD_REST, &CHORD_C, &CHORD_CS, &CHORD_D, &CHORD_DS, &CHORD_E, &CHORD_F, &CHORD_FS, &CHORD_G, &CHORD_GS, &CHORD_A, &CHORD_AS, &CHORD_B};
+const uint16_t CHORDS[13] PROGMEM = {CHORD_REST, CHORD_C, CHORD_CS, CHORD_D, CHORD_DS, CHORD_E, CHORD_F, CHORD_FS, CHORD_G, CHORD_GS, CHORD_A, CHORD_AS, CHORD_B};
 
 #define R 0
 #define C 1
@@ -71,7 +71,9 @@ const uint16_t CHORDS[13] = {&CHORD_REST, &CHORD_C, &CHORD_CS, &CHORD_D, &CHORD_
 void fetchFrequencies (byte scoreElement, uint16_t target[]) {
 
    int dataLength = chord_length * 2;
-   memcpy(target, CHORDS[scoreElement], dataLength);
+
+   uint16_t address = pgm_read_word(CHORDS + scoreElement);
+   memcpy_P(target, address, dataLength);
 }
 
 void play (byte score[], int scoreSize, int score_note_millis, int buzzerPin) {
